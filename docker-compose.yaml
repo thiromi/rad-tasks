@@ -1,7 +1,10 @@
 version: '2.1'
 services:
   service:
-    build: .
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=dev
     depends_on:
       postgres:
         condition: service_healthy

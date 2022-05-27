@@ -5,6 +5,10 @@
 #    pip-compile
 #
 aiohttp==3.8.1
+    # via
+    #   -r requirements.in
+    #   aiohttp-swagger
+aiohttp-swagger==1.0.16
     # via -r requirements.in
 aiosignal==1.2.0
     # via aiohttp
@@ -20,9 +24,15 @@ frozenlist==1.3.0
     #   aiosignal
 idna==3.3
     # via yarl
+jinja2==3.1.2
+    # via aiohttp-swagger
+markupsafe==2.1.1
+    # via jinja2
 multidict==6.0.2
     # via
     #   aiohttp
     #   yarl
+pyyaml==6.0
+    # via aiohttp-swagger
 yarl==1.7.2
     # via aiohttp

@@ -1,16 +1,10 @@
-# This is a sample Python script.
+from aiohttp import web
+from aiohttp_swagger import setup_swagger
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from .web.tasks import routes as task_routes
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    app = web.Application()
+    app.router.add_routes(task_routes)
+    setup_swagger(app, swagger_url="/api/docs", ui_version=2)
+    web.run_app(app)

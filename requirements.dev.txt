@@ -5,6 +5,10 @@
 #    pip-compile requirements.dev.in
 #
 aiohttp==3.8.1
+    # via
+    #   -r requirements.txt
+    #   aiohttp-swagger
+aiohttp-swagger==1.0.16
     # via -r requirements.txt
 aiosignal==1.2.0
     # via
@@ -42,6 +46,14 @@ idna==3.3
     #   yarl
 iniconfig==1.1.1
     # via pytest
+jinja2==3.1.2
+    # via
+    #   -r requirements.txt
+    #   aiohttp-swagger
+markupsafe==2.1.1
+    # via
+    #   -r requirements.txt
+    #   jinja2
 multidict==6.0.2
     # via
     #   -r requirements.txt
@@ -64,7 +76,10 @@ pyparsing==3.0.9
 pytest==7.1.2
     # via -r requirements.dev.in
 pyyaml==6.0
-    # via pre-commit
+    # via
+    #   -r requirements.txt
+    #   aiohttp-swagger
+    #   pre-commit
 six==1.16.0
     # via virtualenv
 toml==0.10.2

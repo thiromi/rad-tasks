@@ -3,10 +3,11 @@ from aiohttp import web
 from aiohttp_swagger import setup_swagger
 
 from rad_task import config
+from rad_task.domain import metadata
 from rad_task.web.tasks import routes as task_routes
 
 
-def setup_database(app: web.Application):
+async def setup_database(app: web.Application):
     """Setup database connection"""
     ahsa.setup(
         app,
@@ -15,12 +16,14 @@ def setup_database(app: web.Application):
         ],
     )
 
+    await ahsa.init_db(app, metadata)
 
-def create() -> web.Application:
+
+async def create() -> web.Application:
     """Creates the web.Application for the entrypoint"""
     app = web.Application()
     app.router.add_routes(task_routes)
     setup_swagger(app, swagger_url="/api/docs", ui_version=2)
-    setup_database(app)
+    await setup_database(app)
 
     return app

@@ -16,7 +16,7 @@ services:
       DEBUG: "true"
       SQLALCHEMY_DATABASE_URI: "postgres://raduser:radpass@postgres:5432/rad_task"
   postgres:
-    image: postgres:14.3-alpine
+    image: postgres:9.6.24-alpine
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

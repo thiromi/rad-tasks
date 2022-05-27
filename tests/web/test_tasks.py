@@ -6,7 +6,7 @@ from rad_task.web.app import create
 
 @pytest.fixture
 async def client(aiohttp_client) -> TestClient:
-    return await aiohttp_client(create())
+    return await aiohttp_client(await create())
 
 
 async def test_list_tasks_returns_200(client: TestClient):

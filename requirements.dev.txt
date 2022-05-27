@@ -10,6 +10,7 @@ aiohttp==3.8.1
     #   aiohttp-sqlalchemy
     #   aiohttp-swagger
     #   aiohttp-things
+    #   pytest-aiohttp
 aiohttp-sqlalchemy==0.34.0
     # via -r requirements.txt
 aiohttp-swagger==1.0.16
@@ -88,7 +89,14 @@ py==1.11.0
 pyparsing==3.0.9
     # via packaging
 pytest==7.1.2
+    # via
+    #   -r requirements.dev.in
+    #   pytest-aiohttp
+    #   pytest-asyncio
+pytest-aiohttp==1.0.4
     # via -r requirements.dev.in
+pytest-asyncio==0.18.3
+    # via pytest-aiohttp
 pyyaml==6.0
     # via
     #   -r requirements.txt

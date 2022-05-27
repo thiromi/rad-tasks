@@ -10,4 +10,8 @@ virtualenv:		## Create virtualenv and activate it
 deps:			## install dependencies
 	pip install pip-tools
 	pip-sync requirements.dev.txt
+	pip install -e .
 	pre-commit install
+
+run: 			## Run the application
+	python -m rad_task

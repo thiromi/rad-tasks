@@ -13,5 +13,8 @@ deps:			## install dependencies
 	pip install -e .
 	pre-commit install
 
+test:			## Run test suite
+	pytest tests/
+
 run: 			## Run the application
 	python -m rad_task

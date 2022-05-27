@@ -13,6 +13,6 @@ RUN pip install --no-cache-dir -r requirements.dev.txt
 FROM app-${ENVIRONMENT} AS app
 
 COPY . .
-RUN pip install . --no-cache-dir
+RUN pip install -e . --no-cache-dir
 
 CMD python -m rad_task

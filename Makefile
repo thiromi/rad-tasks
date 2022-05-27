@@ -5,7 +5,6 @@ help: 			## Show this help
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 deps:       ## install dependencies
-	pip install pre-commit
-	pre-commit install
 	pip install pip-tools
-	pip-tools sync
+	pip-sync requirements.dev.txt
+	pre-commit install

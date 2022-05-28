@@ -2,6 +2,7 @@ import aiohttp_sqlalchemy as ahsa
 import sqlalchemy as sa
 from aiohttp import web
 from aiohttp.web_response import json_response
+from sqlalchemy.future import select
 
 from rad_task.domain.tasks import Task
 
@@ -27,9 +28,8 @@ class TaskView(web.View, ahsa.SAMixin):
         db_session = self.get_sa_session()
 
         async with db_session.begin():
-            tasks = await db_session.execute(sa.select(Task))
-            breakpoint()
-            return json_response(tasks)
+            tasks = await db_session.execute(select(Task))
+            return json_response([task.to_dict() for task in tasks.scalars()])
 
     async def post(self):
         return web.Response(text="Post")

@@ -14,3 +14,13 @@ class Task(Base):
     done = sa.Column(sa.Boolean, default=False)
     created_at = sa.Column(sa.DateTime, default=sa.func.now())
     updated_at = sa.Column(sa.DateTime, default=sa.func.now(), onupdate=sa.func.now())
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "done": self.done,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }

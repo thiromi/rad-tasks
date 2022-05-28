@@ -16,7 +16,7 @@ async def setup_database(app: web.Application):
         ],
     )
 
-    await ahsa.init_db(app, metadata)
+    await ahsa.init_db(app, metadata)  # TODO: use alembic to create the database
 
 
 async def create() -> web.Application:

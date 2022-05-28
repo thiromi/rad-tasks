@@ -5,8 +5,8 @@ from rad_task.web.app import create
 
 
 @pytest.fixture
-def app() -> web.Application:
-    return create()
+async def app() -> web.Application:
+    return await create()
 
 
 def test_create_returns_application_object(app: web.Application):

@@ -23,6 +23,8 @@ aiosignal==1.2.0
     # via
     #   -r requirements.txt
     #   aiohttp
+aiosqlite==0.17.0
+    # via -r requirements.dev.in
 async-timeout==4.0.2
     # via
     #   -r requirements.txt
@@ -117,6 +119,8 @@ toml==0.10.2
     # via pre-commit
 tomli==2.0.1
     # via pytest
+typing-extensions==4.2.0
+    # via aiosqlite
 virtualenv==20.14.1
     # via pre-commit
 yarl==1.7.2

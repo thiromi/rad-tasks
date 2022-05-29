@@ -1,3 +1,5 @@
+import traceback
+
 import aiohttp_sqlalchemy as ahsa
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
@@ -21,9 +23,30 @@ async def setup_database(app: web.Application):
 
 async def create() -> web.Application:
     """Creates the web.Application for the entrypoint"""
-    app = web.Application()
+    app = web.Application(middlewares=[error_handler])
     app.router.add_routes(task_routes)
     setup_swagger(app, swagger_url="/api/docs", ui_version=2)
     await setup_database(app)
 
     return app
+
+
+@web.middleware
+async def error_handler(request: web.Request, handler):
+    """
+    Error handler for the application.
+    """
+    try:
+        return await handler(request)
+    except web.HTTPException:
+        raise
+    except Exception as exc:
+        return web.json_response(
+            {
+                "error": str(exc),
+                "traceback": "".join(
+                    traceback.format_exception(type(exc), exc, exc.__traceback__)
+                ),
+            },
+            status=500,
+        )

@@ -7,10 +7,13 @@
 aiohttp==3.8.1
     # via
     #   -r requirements.txt
+    #   aiohttp-jinja2
     #   aiohttp-sqlalchemy
     #   aiohttp-swagger
     #   aiohttp-things
     #   pytest-aiohttp
+aiohttp-jinja2==1.4.2
+    # via -r requirements.txt
 aiohttp-sqlalchemy==0.34.0
     # via -r requirements.txt
 aiohttp-swagger==1.0.16
@@ -63,9 +66,10 @@ idna==3.3
     #   yarl
 iniconfig==1.1.1
     # via pytest
-jinja2==3.1.2
+jinja2==3.0.3
     # via
     #   -r requirements.txt
+    #   aiohttp-jinja2
     #   aiohttp-swagger
 markupsafe==2.1.1
     # via
@@ -120,7 +124,10 @@ toml==0.10.2
 tomli==2.0.1
     # via pytest
 typing-extensions==4.2.0
-    # via aiosqlite
+    # via
+    #   -r requirements.txt
+    #   aiohttp-jinja2
+    #   aiosqlite
 virtualenv==20.14.1
     # via pre-commit
 yarl==1.7.2

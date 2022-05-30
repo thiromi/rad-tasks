@@ -7,9 +7,12 @@
 aiohttp==3.8.1
     # via
     #   -r requirements.in
+    #   aiohttp-jinja2
     #   aiohttp-sqlalchemy
     #   aiohttp-swagger
     #   aiohttp-things
+aiohttp-jinja2==1.4.2
+    # via -r requirements.in
 aiohttp-sqlalchemy==0.34.0
     # via -r requirements.in
 aiohttp-swagger==1.0.16
@@ -34,8 +37,11 @@ greenlet==1.1.2
     # via sqlalchemy
 idna==3.3
     # via yarl
-jinja2==3.1.2
-    # via aiohttp-swagger
+jinja2==3.0.3
+    # via
+    #   -r requirements.in
+    #   aiohttp-jinja2
+    #   aiohttp-swagger
 markupsafe==2.1.1
     # via jinja2
 multidict==6.0.2
@@ -50,5 +56,7 @@ sqlalchemy==1.4.36
     #   sqlalchemy-things
 sqlalchemy-things==0.10.2
     # via aiohttp-sqlalchemy
+typing-extensions==4.2.0
+    # via aiohttp-jinja2
 yarl==1.7.2
     # via aiohttp

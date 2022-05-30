@@ -55,3 +55,8 @@ async def test_create_task_returns_201(client: TestClient):
 async def test_delete_task_returns_204(client: TestClient, db_session: ahsa.Session):
     resp = await client.delete("/api/tasks/1")
     assert resp.status == 204
+
+
+async def test_patch_task_returns_200(client: TestClient, db_session: ahsa.Session):
+    resp = await client.patch("/api/tasks/1", json={"done": True})
+    assert resp.status == 200

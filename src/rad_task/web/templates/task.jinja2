@@ -17,11 +17,12 @@
             $('#spinner').hide("fast");
         }
         add_task = function(task) {
+            console.info(task)
             $('#task-list').append(
-                '<li><input type="checkbox" />'
+                '<li><input type="checkbox" ' + (task.done ? 'checked' : '') + ' />'
                 + '<input type="hidden" name="task_id" value="' + task.id + '" />'
                 + task.title + '<button class="delete">delete</button></li>'
-            );
+            )
         }
         $(function() {
             BASE_URL = 'http://localhost:8080/api';
@@ -71,13 +72,18 @@
             });
 
             // Toggle task as completed
-            $('#task-list input[type="checkbox"]').on('change', function() {
-                var id = $(this).closest('li').data('id');
+            $('#task-list').on('click', 'input[type="checkbox"]', function() {
+                show_progress();
+                var id = $(this).parent().find('input[name="task_id"]').val();
                 $.ajax({
-                    url: '/tasks/' + id,
+                    url: '/api/tasks/' + id,
                     type: 'PATCH',
-                    data: {
+                    dataType: "json",
+                    data: JSON.stringify({
                         done: $(this).prop('checked') ? 1 : 0
+                    }),
+                    success: function() {
+                        hide_progress();
                     }
                 });
             });

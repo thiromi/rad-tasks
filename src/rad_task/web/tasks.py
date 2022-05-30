@@ -57,6 +57,33 @@ class TaskView(web.View, ahsa.SAMixin):
         return json_response(to_dict(task), status=201)
 
 
+@routes.delete("/api/tasks/{id}")
+async def delete(request: web.Request):
+    """
+    ---
+    description: This endpoint deletes tasks from the list
+    tags:
+    - Task
+    produces:
+    - application/json
+    responses:
+        "204":
+            description: successful operation
+        "405":
+            description: invalid HTTP Method
+    """
+    db_session = ahsa.get_session(request)
+    task_id = int(request.match_info["id"])
+
+    async with db_session.begin():
+        query = await db_session.execute(select(Task).where(Task.id == task_id))
+        task = query.scalar_one()
+        await db_session.delete(task)
+        await db_session.commit()
+
+    return json_response(status=204)
+
+
 def to_dict(task: Task) -> dict:
     """Transform task to dict"""
     return {

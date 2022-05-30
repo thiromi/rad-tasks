@@ -16,18 +16,29 @@
         hide_progress = function() {
             $('#spinner').hide("fast");
         }
+        add_task = function(task) {
+            $('#task-list').append(
+                '<li><input type="checkbox" />'
+                + '<input type="hidden" name="task_id" value="' + task.id + '" />'
+                + task.title + '<button class="delete">delete</button></li>'
+            );
+        }
         $(function() {
             BASE_URL = 'http://localhost:8080/api';
+
+            // get all tasks
             $.ajax({
                 url: BASE_URL + '/tasks',
                 success: function(data) {
                     $('#task-list').empty();
                     data.forEach(function(task) {
-                        $('#task-list').append('<li><input type="checkbox" />' + task.title + '</li>');
+                        add_task(task);
                     });
                     hide_progress();
                 }
             });
+
+            // Add task
             $('#task-form').on('submit', function() {
                 show_progress();
                 $.ajax({
@@ -38,12 +49,28 @@
                         title: $('#task-input').val()
                     }),
                     success: function(data) {
-                        $('#task-list').append('<li><input type="checkbox" />' + data.title + '</li>');
+                        add_task(data);
                         hide_progress();
                     }
                 });
                 return false;
             });
+
+            // Delete task
+            $('#task-list').on('click', '.delete', function() {
+                var item_to_delete = $(this).parent();
+                show_progress();
+                $.ajax({
+                    url: BASE_URL + '/tasks/' + $(this).parent().find('input[name="task_id"]').val(),
+                    method: 'DELETE',
+                    success: function() {
+                        item_to_delete.remove();
+                        hide_progress();
+                    }
+                });
+            });
+
+            // Toggle task as completed
             $('#task-list input[type="checkbox"]').on('change', function() {
                 var id = $(this).closest('li').data('id');
                 $.ajax({

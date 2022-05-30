@@ -1,5 +1,4 @@
 import aiohttp_sqlalchemy as ahsa
-import sqlalchemy as sa
 from aiohttp import web
 from aiohttp.web_response import json_response
 from sqlalchemy.future import select
@@ -32,7 +31,30 @@ class TaskView(web.View, ahsa.SAMixin):
             return json_response([to_dict(task) for task in tasks.scalars()])
 
     async def post(self):
-        return web.Response(text="Post")
+        """
+        ---
+        description: This endpoint adds tasks to the list
+        tags:
+        - Task
+        produces:
+        - application/json
+        responses:
+            "201":
+                description: successful operation. Show the task created
+            "405":
+                description: invalid HTTP Method
+            "400":
+                description: invalid input data
+        """
+        db_session = self.get_sa_session()
+        data = await self.request.json()
+
+        async with db_session.begin():
+            task = Task(**data)
+            db_session.add(task)
+            await db_session.commit()
+
+        return json_response(to_dict(task), status=201)
 
 
 def to_dict(task: Task) -> dict:

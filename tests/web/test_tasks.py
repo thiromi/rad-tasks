@@ -38,3 +38,15 @@ async def test_list_tasks_returns_task(
             "done": False,
         },
     ]
+
+
+async def test_create_task_returns_201(client: TestClient):
+    resp = await client.post(
+        "/api/tasks",
+        json={
+            "title": "Test Task",
+            "description": "test task",
+            "done": False,
+        },
+    )
+    assert resp.status == 201

@@ -29,7 +29,17 @@ class TaskView(web.View, ahsa.SAMixin):
 
         async with db_session.begin():
             tasks = await db_session.execute(select(Task))
-            return json_response([task.to_dict() for task in tasks.scalars()])
+            return json_response([to_dict(task) for task in tasks.scalars()])
 
     async def post(self):
         return web.Response(text="Post")
+
+
+def to_dict(task: Task) -> dict:
+    """Transform task to dict"""
+    return {
+        "id": task.id,
+        "title": task.title,
+        "description": task.description,
+        "done": task.done,
+    }

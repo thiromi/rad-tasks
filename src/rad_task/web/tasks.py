@@ -8,53 +8,54 @@ from rad_task.domain.tasks import Task
 routes = web.RouteTableDef()
 
 
-@routes.view("/api/tasks")
-class TaskView(web.View, ahsa.SAMixin):
-    async def get(self):
-        """
-        ---
-        description: This endpoint list all tasks
-        tags:
-        - Task
-        produces:
-        - application/json
-        responses:
-            "200":
-                description: successful operation. List all tasks
-            "405":
-                description: invalid HTTP Method
-        """
-        db_session = self.get_sa_session()
+@routes.get("/api/tasks")
+async def get(request: web.Request):
+    """
+    ---
+    description: This endpoint list all tasks
+    tags:
+    - Task
+    produces:
+    - application/json
+    responses:
+        "200":
+            description: successful operation. List all tasks
+        "405":
+            description: invalid HTTP Method
+    """
+    db_session = ahsa.get_session(request)
 
-        async with db_session.begin():
-            tasks = await db_session.execute(select(Task))
-            return json_response([to_dict(task) for task in tasks.scalars()])
+    async with db_session.begin():
+        tasks = await db_session.execute(select(Task))
+        return json_response([to_dict(task) for task in tasks.scalars()])
 
-    async def post(self):
-        """
-        ---
-        description: This endpoint adds tasks to the list
-        tags:
-        - Task
-        produces:
-        - application/json
-        responses:
-            "201":
-                description: successful operation. Show the task created
-            "405":
-                description: invalid HTTP Method
-            "400":
-                description: invalid input data
-        """
-        db_session = self.get_sa_session()
-        data = await self.request.json()
 
-        async with db_session.begin():
-            task = Task(**data)
-            db_session.add(task)
-            await db_session.commit()
+@routes.post("/api/tasks")
+async def post(request: web.Request):
+    """
+    ---
+    description: This endpoint adds tasks to the list
+    tags:
+    - Task
+    produces:
+    - application/json
+    responses:
+        "201":
+            description: successful operation. Show the task created
+        "405":
+            description: invalid HTTP Method
+        "400":
+            description: invalid input data
+    """
+    db_session = ahsa.get_session(request)
+    data = await request.json()
 
-        return json_response(to_dict(task), status=201)
+    async with db_session.begin():
+        task = Task(**data)
+        db_session.add(task)
+        await db_session.commit()
+
+    return json_response(to_dict(task), status=201)
 
 
 @routes.delete("/api/tasks/{id}")

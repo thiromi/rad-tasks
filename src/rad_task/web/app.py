@@ -1,11 +1,14 @@
 import traceback
 
+import aiohttp_jinja2
 import aiohttp_sqlalchemy as ahsa
+import jinja2
 from aiohttp import web
 from aiohttp_swagger import setup_swagger
 
 from rad_task import config
 from rad_task.domain import metadata
+from rad_task.web.index import routes as index_routes
 from rad_task.web.tasks import routes as task_routes
 
 
@@ -25,8 +28,12 @@ async def create() -> web.Application:
     """Creates the web.Application for the entrypoint"""
     app = web.Application(middlewares=[error_handler])
     app.router.add_routes(task_routes)
+    app.router.add_routes(index_routes)
     setup_swagger(app, swagger_url="/api/docs", ui_version=2)
     await setup_database(app)
+    aiohttp_jinja2.setup(
+        app, loader=jinja2.FileSystemLoader(str(config.TEMPLATES_FOLDER))
+    )
 
     return app
 

@@ -1,0 +1,60 @@
+<html>
+<body>
+    <h1>Tasks</h1>
+    <div id="spinner">loading...</div>
+    <ul id="task-list">
+    </ul>
+    <form id="task-form" action="">
+        <input type="text" id="task-input" placeholder="Add a task...">
+        <button type="submit">Add</button>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        show_progress = function() {
+            $('#spinner').show("fast");
+        }
+        hide_progress = function() {
+            $('#spinner').hide("fast");
+        }
+        $(function() {
+            BASE_URL = 'http://localhost:8080/api';
+            $.ajax({
+                url: BASE_URL + '/tasks',
+                success: function(data) {
+                    $('#task-list').empty();
+                    data.forEach(function(task) {
+                        $('#task-list').append('<li><input type="checkbox" />' + task.title + '</li>');
+                    });
+                    hide_progress();
+                }
+            });
+            $('#task-form').on('submit', function() {
+                show_progress();
+                $.ajax({
+                    url: BASE_URL + '/tasks',
+                    method: 'POST',
+                    dataType: "json",
+                    data: JSON.stringify({
+                        title: $('#task-input').val()
+                    }),
+                    success: function(data) {
+                        $('#task-list').append('<li><input type="checkbox" />' + data.title + '</li>');
+                        hide_progress();
+                    }
+                });
+                return false;
+            });
+            $('#task-list input[type="checkbox"]').on('change', function() {
+                var id = $(this).closest('li').data('id');
+                $.ajax({
+                    url: '/tasks/' + id,
+                    type: 'PATCH',
+                    data: {
+                        done: $(this).prop('checked') ? 1 : 0
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

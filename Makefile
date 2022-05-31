@@ -17,4 +17,4 @@ test:			## Run test suite
 	pytest tests/
 
 run: 			## Run the application
-	python -m rad_task
+	docker-compose up service

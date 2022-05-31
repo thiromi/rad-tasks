@@ -27,7 +27,7 @@ $ make test
 ## Running the application
 
 ```
-$ docker-compose up service
+$ make run
 ```
 
 Reaching out to http://localhost:8080/ should lead you to the UI to manage the tasks

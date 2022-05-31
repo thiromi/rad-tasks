@@ -29,3 +29,7 @@ $ make test
 ```
 $ docker-compose up service
 ```
+
+Reaching out to http://localhost:8080/ should lead you to the UI to manage the tasks
+
+API Docs are accessible at http://localhost:8080/api/docs

@@ -45,11 +45,11 @@ attrs==21.4.0
     #   pytest
 cfgv==3.3.1
     # via pre-commit
-distlib==0.3.4
+distlib==0.3.9
     # via virtualenv
 exceptiongroup==1.0.4
     # via pytest
-filelock==3.7.0
+filelock==3.16.1
     # via virtualenv
 frozenlist==1.3.0
     # via
@@ -86,7 +86,7 @@ nodeenv==1.6.0
     # via pre-commit
 packaging==21.3
     # via pytest
-platformdirs==2.5.2
+platformdirs==4.3.6
     # via virtualenv
 pluggy==1.0.0
     # via pytest
@@ -108,8 +108,6 @@ pyyaml==6.0
     #   -r requirements.txt
     #   aiohttp-swagger
     #   pre-commit
-six==1.16.0
-    # via virtualenv
 sqlalchemy==1.4.36
     # via
     #   -r requirements.txt
@@ -128,7 +126,7 @@ typing-extensions==4.2.0
     #   -r requirements.txt
     #   aiohttp-jinja2
     #   aiosqlite
-virtualenv==20.14.1
+virtualenv==20.26.6
     # via pre-commit
 yarl==1.7.2
     # via
